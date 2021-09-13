@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <title>主页</title>
+
+    <!-- Font Awesome 图标 -->
+    <link rel="stylesheet" href="/plugins/fontawesome-free/css/all.min.css">
+    <!-- 主题样式 -->
+    <link rel="stylesheet" href="/dist/css/adminlte.min.css">
+    <!-- 离线 Google 字体: Source Sans Pro -->
+    <link href="/dist/css/google.css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="//at.alicdn.com/t/font_2429669_smitq9kcbab.css">
+
+
+</head>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+
+    <!-- 导航栏 -->
+    <div th:include="~{adminpublic::tb}"></div>
+    <!-- /.navbar -->
+
+    <!-- 主侧边栏容器 -->
+    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+        <!-- 品牌 Logo -->
+        <a href="index3.html" class="brand-link">
+           <!-- <img src="/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
+                 style="opacity: .8">-->
+            <span class="brand-text font-weight-light text-center">物业管理系统</span>
+        </a>
+
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <!-- 侧边栏用户面板（可选） -->
+            <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                <div class="info">
+                    <a class="d-block text-centerx" th:text="'欢迎使用,'+ ${session.emp_admin.getF_name()}"></a>
+                </div>
+            </div>
+
+            <!-- 侧边栏菜单 -->
+            <div th:include="~{adminpublic::nb(activeUri='park')}"></div>
+            <!-- /.sidebar-menu -->
+        </div>
+        <!-- /.sidebar -->
+    </aside>
+
+    <!-- Content Wrapper. 包含页面内容 -->
+    <div class="content-wrapper">
+
+        <!-- 主体内容 -->
+        <div class="content">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card card-info">
+                        <div class="card-header">
+                            <h3 class="card-title">添加停车场</h3>
+                            <div class="text-center">
+                                <strong style="color: #ff0931" th:text="${flag}"></strong>
+                            </div>
+                        </div>
+                        <!-- /.card-header -->
+                        <!-- form start -->
+                        <form action="/park/new.do">
+                        <div class="card-body">
+                                <div class="form-group">
+                                    <label>停车场编号</label>
+                                    <input class="form-control" type="text" name="id" placeholder="请填写需要添加的停车场编号" required="required" onKeyUp="value=value.replace(/[\W]/g,'')">
+                                </div>
+                                <div class="form-group">
+                                    <label>停车场名称</label>
+                                    <input class="form-control" type="text" name="name" placeholder="请填写需要添加的停车场名称" required="required">
+                                </div>
+                                <div class="form-group">
+                                    <label>停车场容量</label>
+                                    <input class="form-control" type="text" name="margin" placeholder="请填写需要添加的停车场容量" required="required" oninput = "value=value.replace(/[^\d]/g,'')" maxlength="6">
+                                </div>
+                             </div>
+                                <div class="card-footer">
+                                    <button type="submit" class="btn btn-primary toastsDefaultAutohide">添加</button>
+                                    <a class="btn btn-info toastsDefaultAutohide" href="/park/adminToPark">
+                                        返回
+                                    </a>
+                                </div>
+                        </form>
+
+
+                    </div>
+                    <!-- /.card -->
+                </div>
+            </div>
+        </div>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+
+    <!-- Control Sidebar -->
+
+    <!-- /.control-sidebar -->
+
+    <!-- Main Footer -->
+    <footer class="main-footer">
+        <!-- To the right -->
+        <div class="float-right d-none d-sm-inline">
+            17软件工程6班欧凯曈
+        </div>
+        <!-- Default to the left -->
+        <strong>Copyright &copy; 2020-2021 <a href="https://adminlte.io">欧凯曈</a>.</strong> 保留所有权利。
+    </footer>
+</div>
+<!-- ./wrapper -->
+
+<!-- 载入脚本 -->
+
+<!-- jQuery -->
+<script src="/plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- AdminLTE App -->
+<script src="/dist/js/adminlte.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <title>主页</title>
+
+    <!-- Font Awesome 图标 -->
+    <link rel="stylesheet" href="/plugins/fontawesome-free/css/all.min.css">
+    <!-- 主题样式 -->
+    <link rel="stylesheet" href="/dist/css/adminlte.min.css">
+    <!-- 离线 Google 字体: Source Sans Pro -->
+    <link href="/dist/css/google.css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="//at.alicdn.com/t/font_2429669_190zxvhlk87.css">
+
+
+</head>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+
+    <!-- 导航栏 -->
+    <div th:include="~{emppublic::tb}"></div>
+    <!-- /.navbar -->
+
+    <!-- 主侧边栏容器 -->
+    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+        <!-- 品牌 Logo -->
+        <a href="index3.html" class="brand-link">
+           <!-- <img src="/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
+                 style="opacity: .8">-->
+            <span class="brand-text font-weight-light text-center">物业管理系统</span>
+        </a>
+
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <!-- 侧边栏用户面板（可选） -->
+            <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                <div class="info">
+                    <a class="d-block text-centerx" th:text="'欢迎使用,'+ ${session.emp_user.getF_name()}"></a>
+                </div>
+            </div>
+
+            <!-- 侧边栏菜单 -->
+
+            <div th:include="~{emppublic::nb(activeUri='userManage')}"></div>
+            <!-- /.sidebar-menu -->
+        </div>
+        <!-- /.sidebar -->
+    </aside>
+
+    <!-- Content Wrapper. 包含页面内容 -->
+    <div class="content-wrapper">
+        <div class="content">
+            <div class="card-info">
+                <div class="card-header">
+                    <h3 class="card-title">业主地址信息修改</h3>
+                    <div class="text-center" style="color: #ff0931"  th:if="${#httpServletRequest.getParameter('flag')} eq 'same'">
+                        <strong>新地址不能与待修改地址相同</strong>
+                    </div>
+                </div>
+                <!-- /.card-header -->
+                <!-- form start -->
+                <form action="/userManage/updateUserAdd.do">
+                    <div class="card-body">
+
+                        <input hidden="true" th:value="${aid}" name="aid">
+                        <input hidden="true" th:value="${uid}" name="uid">
+                        <div class="form-group" th:if="${not #lists.isEmpty(session.one)}">
+                            <label>一级地址</label>
+                            <select class="form-control select2 select2-hidden-accessible"  name="addOne" required="required">
+                                <option value="">请选择</option>
+                                <option th:each="o:${session.one}" th:value="${o.getH_id()}" th:text="${o.getName()}"></option>
+                            </select>
+                        </div>
+                        <div class="form-group" th:if="${not #lists.isEmpty(session.two)}">
+                            <label>二级地址</label>
+                            <select class="form-control select2 select2-hidden-accessible"  name="addTwo"required="required">
+                                <option value="">请选择</option>
+                                <option th:each="t:${session.two}" th:value="${t.getH_id()}" th:text="${t.getName()}"></option>
+                            </select>
+                        </div>
+                        <div class="form-group" th:if="${not #lists.isEmpty(session.three)}">
+                            <label>三级地址</label>
+                            <select class="form-control select2 select2-hidden-accessible"  name="addThree" required="required">
+                                <option value="">请选择</option>
+                                <option th:each="h:${session.three}" th:value="${h.getH_id()}" th:text="${h.getName()}"></option>
+                            </select>
+                        </div>
+                        <div class="form-group" th:if="${not #lists.isEmpty(session.four)}">
+                            <label>四级地址</label>
+                            <select class="form-control select2 select2-hidden-accessible"  name="addFour" required="required">
+                                <option value="">请选择</option>
+                                <option th:each="f:${session.four}" th:value="${f.getH_id()}" th:text="${f.getName()}"></option>
+                            </select>
+                        </div>
+                    </div>
+                    <!-- /.card-body -->
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-primary toastsDefaultAutohide">修改</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+
+    <!-- Control Sidebar -->
+
+    <!-- /.control-sidebar -->
+
+    <!-- Main Footer -->
+    <footer class="main-footer">
+        <!-- To the right -->
+        <div class="float-right d-none d-sm-inline">
+            17软件工程6班欧凯曈
+        </div>
+        <!-- Default to the left -->
+        <strong>Copyright &copy; 2020-2021 <a href="https://adminlte.io">欧凯曈</a>.</strong> 保留所有权利。
+    </footer>
+</div>
+<!-- ./wrapper -->
+
+<!-- 载入脚本 -->
+
+<!-- jQuery -->
+<script src="/plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- AdminLTE App -->
+<script src="/dist/js/adminlte.min.js"></script>
+</body>
+</html>

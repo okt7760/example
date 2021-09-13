@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>忘记密码</title>
+  <!-- 告诉浏览器屏幕自适应 -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="/plugins/fontawesome-free/css/all.min.css">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="https://cdn.bootcss.com/ionicons/2.0.1/css/ionicons.min.css">
+  <!-- icheck bootstrap -->
+  <link rel="stylesheet" href="/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+  <!-- 主题样式 -->
+  <link rel="stylesheet" href="/dist/css/adminlte.min.css">
+  <!-- 离线 Google 字体: Source Sans Pro -->
+  <link href="/dist/css/google.css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+</head>
+<body class="hold-transition login-page">
+<div class="login-box">
+  <div class="login-logo">
+    <a href="/userlogin/toLogin">找回密码</a>
+  </div>
+  <!-- /.login-logo -->
+  <div class="card">
+    <div class="card-body login-card-body">
+      <p class="login-box-msg">忘记了密码？在这里轻松找回。</p>
+      <div class="text-center" style="color: #ff0931" th:text="${#httpServletRequest.getAttribute('flag')}"></div>
+      <form action="/emplogin/recover.do" method="post">
+        <label>账号</label>
+        <div class="input-group mb-3">
+          <input type="text" class="form-control" placeholder="请输入你的账号" name="username"  required="required">
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-envelope"></span>
+            </div>
+          </div>
+        </div>
+        <label>身份证号</label>
+        <div class="input-group mb-3">
+          <input type="text" class="form-control" placeholder="请输入你的身份证号码" name="uid" required="required" maxlength="18" minlength="17">
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-envelope"></span>
+            </div>
+          </div>
+        </div>
+        <label>输入密码</label>
+        <div class="input-group mb-3">
+          <input type="password" class="form-control" placeholder="请输入你的新密码" name="newpwd" required="required" maxlength="13" minlength="6">
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-envelope"></span>
+            </div>
+          </div>
+        </div>
+        <label>再次输入密码</label>
+        <div class="input-group mb-3">
+          <input type="password" class="form-control" placeholder="请再次输入你的新密码" name="repeatpwd" required="required" maxlength="13" minlength="6">
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-envelope"></span>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <button type="submit" class="btn btn-primary btn-block">修改密码</button>
+          </div>
+          <!-- /.col -->
+        </div>
+      </form>
+
+      <p class="mt-3 mb-1">
+        <a href="/emplogin/toEmpLogin">登录</a>
+      </p>
+      <p class="mb-0">
+        <a href="/user/toReg" class="text-center">注册新会员</a>
+      </p>
+    </div>
+    <!-- /.login-card-body -->
+  </div>
+</div>
+<!-- /.login-box -->
+
+<!-- jQuery -->
+<script src="../../plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- AdminLTE App -->
+<script src="../../dist/js/adminlte.min.js"></script>
+
+</body>
+</html>

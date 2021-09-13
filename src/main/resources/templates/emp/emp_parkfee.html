@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <title>主页</title>
+
+    <!-- Font Awesome 图标 -->
+    <link rel="stylesheet" href="/plugins/fontawesome-free/css/all.min.css">
+    <!-- 主题样式 -->
+    <link rel="stylesheet" href="/dist/css/adminlte.min.css">
+    <!-- 离线 Google 字体: Source Sans Pro -->
+    <link href="/dist/css/google.css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="//at.alicdn.com/t/font_2429669_190zxvhlk87.css">
+
+
+</head>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+
+    <!-- 导航栏 -->
+    <div th:include="~{emppublic::tb}"></div>
+    <!-- /.navbar -->
+
+    <!-- 主侧边栏容器 -->
+    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+        <!-- 品牌 Logo -->
+        <a href="index3.html" class="brand-link">
+           <!-- <img src="/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
+                 style="opacity: .8">-->
+            <span class="brand-text font-weight-light text-center">物业管理系统</span>
+        </a>
+
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <!-- 侧边栏用户面板（可选） -->
+            <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                <div class="info">
+                    <a class="d-block text-centerx" th:text="'欢迎使用,'+ ${session.emp_user.getF_name()}"></a>
+                </div>
+            </div>
+
+            <!-- 侧边栏菜单 -->
+            <div th:include="~{emppublic::nb(activeUri='searchParkfee')}"></div>
+            <!-- /.sidebar-menu -->
+        </div>
+        <!-- /.sidebar -->
+    </aside>
+
+    <!-- Content Wrapper. 包含页面内容 -->
+    <div class="content-wrapper">
+        <!-- 内容标题（页面标题） -->
+
+        <!-- /.content-header -->
+
+        <!-- 主体内容 -->
+        <div class="content">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">业主车辆费用查询</h3>
+
+                            <div class="card-tools">
+                                <form action="/cost/carFindById.do"  class="input-group input-group-sm" style="width: 500px;">
+                                    <div class="input-group-append">
+                                        <h5 class="form-control float-right" style="border: none; box-shadow: none">根据车牌号搜索:</h5>
+                                    </div>
+                                    <div class="input-group-append">
+                                    <select class="form-control float-right" name="province" required="required">
+                                        <option value="">请选择</option>
+                                        <option value="1">京</option>
+                                        <option value="2">沪</option>
+                                        <option value="3">津</option>
+                                        <option value="4">渝</option>
+                                        <option value="5">蒙</option>
+                                        <option value="6">宁</option>
+                                        <option value="7">新</option>
+                                        <option value="8">藏</option>
+                                        <option value="9">桂</option>
+                                        <option value="A">黑</option>
+                                        <option value="B">辽</option>
+                                        <option value="C">吉</option>
+                                        <option value="D">冀</option>
+                                        <option value="E">鲁</option>
+                                        <option value="F">晋</option>
+                                        <option value="G">陕</option>
+                                        <option value="H">甘</option>
+                                        <option value="I">青</option>
+                                        <option value="J">豫</option>
+                                        <option value="K">皖</option>
+                                        <option value="L">鄂</option>
+                                        <option value="M">湘</option>
+                                        <option value="N">苏</option>
+                                        <option value="O">浙</option>
+                                        <option value="P">赣</option>
+                                        <option value="Q">闽</option>
+                                        <option value="R">粤</option>
+                                        <option value="S">琼</option>
+                                        <option value="T">台</option>
+                                        <option value="U">川</option>
+                                        <option value="V">滇</option>
+                                        <option value="W">贵</option>
+                                        <option value="GH">港澳</option>
+                                    </select>
+                                    </div>
+                                    <div class="input-group-append">
+                                        <input class="form-control float-right" type="text" maxlength="6" name="number" placeholder="输入车牌号码" required="required">
+                                    </div>
+                                    <div class="input-group-append">
+                                        <button type="submit" class="form-control float-right btn btn-default">搜索</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body table-responsive p-0">
+                            <table class="table table-hover text-nowrap">
+                                <thead>
+                                <tr>
+                                    <th>车辆ID</th>
+                                    <th>车牌号码</th>
+                                    <th>车辆拥有者</th>
+                                    <th>到期日期</th>
+                                    <th>剩余天数</th>
+                                    <th>停车场地</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td th:text="${list?.getCar_id()}"></td>
+                                    <td th:text="${list?.getCar_name()}"></td>
+                                    <td th:text="${list?.getR_username()}"></td>
+                                    <td th:text="${list?.getExpire_str()}"></td>
+                                    <td th:text="${list?.getBalance() == 0 ? '已过期，请及时续费' : list?.getBalance()}"></td>
+                                    <td th:text="${list?.getPlaceStr()}"></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+                </div>
+            </div>
+        </div>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+
+    <!-- Control Sidebar -->
+
+    <!-- /.control-sidebar -->
+
+    <!-- Main Footer -->
+    <footer class="main-footer">
+        <!-- To the right -->
+        <div class="float-right d-none d-sm-inline">
+            17软件工程6班欧凯曈
+        </div>
+        <!-- Default to the left -->
+        <strong>Copyright &copy; 2020-2021 <a href="https://adminlte.io">欧凯曈</a>.</strong> 保留所有权利。
+    </footer>
+</div>
+<!-- ./wrapper -->
+
+<!-- 载入脚本 -->
+
+<!-- jQuery -->
+<script src="/plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- AdminLTE App -->
+<script src="/dist/js/adminlte.min.js"></script>
+</body>
+</html>

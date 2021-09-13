@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <title>主页</title>
+
+    <!-- Font Awesome 图标 -->
+    <link rel="stylesheet" href="/plugins/fontawesome-free/css/all.min.css">
+    <!-- 主题样式 -->
+    <link rel="stylesheet" href="/dist/css/adminlte.min.css">
+    <!-- 离线 Google 字体: Source Sans Pro -->
+    <link href="/dist/css/google.css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="//at.alicdn.com/t/font_2429669_190zxvhlk87.css">
+
+
+</head>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+
+    <!-- 导航栏 -->
+    <div th:include="~{emppublic::tb}"></div>
+    <!-- /.navbar -->
+
+    <!-- 主侧边栏容器 -->
+    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+        <!-- 品牌 Logo -->
+        <a href="index3.html" class="brand-link">
+           <!-- <img src="/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
+                 style="opacity: .8">-->
+            <span class="brand-text font-weight-light text-center">物业管理系统</span>
+        </a>
+
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <!-- 侧边栏用户面板（可选） -->
+            <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                <div class="info">
+                    <a class="d-block text-centerx" th:text="'欢迎使用,'+ ${session.emp_user.getF_name()}"></a>
+                </div>
+            </div>
+
+            <!-- 侧边栏菜单 -->
+            <div th:include="~{emppublic::nb(activeUri='userManage')}"></div>
+            <!-- /.sidebar-menu -->
+        </div>
+        <!-- /.sidebar -->
+    </aside>
+
+    <!-- Content Wrapper. 包含页面内容 -->
+    <div class="content-wrapper">
+        <div class="content">
+            <div class="card-info">
+                <div class="card-header">
+                    <h3 class="card-title">业主信息</h3>
+                    <div class="text-center">
+                        <strong th:if="${flag} == 0" style="color: #ff0931" >该身份证号已存在，请重新输入</strong>
+                    </div>
+                    <div class="text-center">
+                        <strong th:if="${flag} == 1" style="color: #ff0931" >操作成功</strong>
+                    </div>
+                </div>
+                <!-- /.card-header -->
+                <!-- form start -->
+                <form action="/userManage/update.do">
+                    <div class="card-body">
+
+                        <div class="form-group">
+                            <label for="username">业主帐号</label>
+                            <input type="hidden" class="form-control" id="username" name="username" th:value="${user.getR_username()}" style="width: 50%">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="name">业主姓名</label>
+                            <input type="text" class="form-control" id="name" name="name" th:value="${user.getR_name()}" required="required" style="width: 50%">
+                        </div>
+                        <div class="form-group">
+                            <label for="uid">业主身份证号码</label>
+                            <input type="text" class="form-control" id="uid" name="uid" th:value="${user.getR_uid()}" required="required" maxlength="18" minlength="18" style="width: 50%" onKeyUp="value=value.replace(/[\W]/g,'')">
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">业主电话号码</label>
+                            <input type="tel" class="form-control" id="phone" name="phone" placeholder="联系电话" oninput = "value=value.replace(/[^\d]/g,'')" th:value="${user.getR_phone()}"  pattern=".{11,11}" required="required" maxlength="11" style="width: 50%">
+                        </div>
+                        <div class="form-group">
+                            <select class="form-control select2 select2-hidden-accessible" name="gender" required="required" style="width: 50%">
+                                <option th:selected="${user.getR_gender()} == 1" value=1>男</option>
+                                <option th:selected="${user.getR_gender()} == 0" value=0>女</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary toastsDefaultAutohide">修改</button>
+                            <a href="/userManage/toUserManagement" class="btn btn-secondary toastsDefaultAutohide">返回</a>
+                        </div>
+                        <div class="card-header">
+                            <h3 class="card-title">业主拥有房产</h3>
+                            <div class="card-tools">
+                                <a class="btn btn-block btn-info" th:href="'/userManage/toAddUserAddr?uid='+${user.getR_username()}">
+                                    添加
+                                </a>
+                            </div>
+                        </div>
+                        <div class="card-body table-responsive p-0">
+                            <table class="table table-hover text-nowrap">
+                                <thead>
+                                <tr>
+                                    <th>地址</th>
+                                    <th>操作</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="a : ${user.getAddress()}">
+                                    <td th:text="${a.getH_id_one()}+${a.getH_id_two()}+${a.getH_id_three()}+${a.getH_id_four()}"></td>
+                                    <td>
+                                        <a class="btn btn-sm btn-default" th:href="'/userManage/toUpdateUserAdd?id='+${a.getH_id()}+'&uid='+${a.getR_username()}">修改</a>
+                                        <a class="btn btn-sm btn-danger" th:href="'/userManage/delUserAdd.do?id='+${a.getH_id()}+'&uid='+${a.getR_username()}">删除</a>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="card-header">
+                            <h3 class="card-title">业主拥有车辆</h3>
+                            <div class="card-tools">
+                                <a class="btn btn-block btn-info" href="/userManage/toBandCar">
+                                    添加
+                                </a>
+                            </div>
+                        </div>
+                        <div class="card-body table-responsive p-0">
+                            <table class="table table-hover text-nowrap">
+                                <thead>
+                                <tr>
+                                    <th>车牌号码</th>
+                                    <th>月保到期日</th>
+                                    <th>操作</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="c : ${carfee}">
+                                    <td th:text="${c.getCar_name()}"></td>
+                                    <td th:text="${c.getExpire_str()}"></td>
+                                    <td>
+                                        <a class="btn btn-sm btn-default" th:href="'/userManage/toUpdateUserCar?id='+${c.getCar_id()}+'&uid='+${c.getR_username()}">修改</a>
+                                        <a class="btn btn-sm btn-danger" th:href="'/userManage/delUserCar.do?id='+${c.getCar_id()}+'&uid='+${c.getR_username()}">解绑</a>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+
+    <!-- Control Sidebar -->
+
+    <!-- /.control-sidebar -->
+
+    <!-- Main Footer -->
+    <footer class="main-footer">
+        <!-- To the right -->
+        <div class="float-right d-none d-sm-inline">
+            17软件工程6班欧凯曈
+        </div>
+        <!-- Default to the left -->
+        <strong>Copyright &copy; 2020-2021 <a href="https://adminlte.io">欧凯曈</a>.</strong> 保留所有权利。
+    </footer>
+</div>
+<!-- ./wrapper -->
+
+<!-- 载入脚本 -->
+
+<!-- jQuery -->
+<script src="/plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- AdminLTE App -->
+<script src="/dist/js/adminlte.min.js"></script>
+</body>
+</html>

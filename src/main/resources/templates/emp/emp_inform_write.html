@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <title>主页</title>
+    <!-- Font Awesome 图标 -->
+    <link rel="stylesheet" href="/plugins/fontawesome-free/css/all.min.css">
+    <!-- 主题样式 -->
+    <link rel="stylesheet" href="/dist/css/adminlte.min.css">
+    <!-- 离线 Google 字体: Source Sans Pro -->
+    <link href="/dist/css/google.css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="//at.alicdn.com/t/font_2429669_190zxvhlk87.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/wangeditor@latest/dist/wangEditor.min.js"></script>
+
+    <script src="http://lib.sinaapp.com/js/jquery/1.7.2/jquery.min.js"></script>
+
+</head>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+
+    <!-- 导航栏 -->
+    <div th:include="~{emppublic::tb}"></div>
+    <!-- /.navbar -->
+
+    <!-- 主侧边栏容器 -->
+    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+        <!-- 品牌 Logo -->
+        <a href="index3.html" class="brand-link">
+           <!-- <img src="/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
+                 style="opacity: .8">-->
+            <span class="brand-text font-weight-light text-center">物业管理系统</span>
+        </a>
+
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <!-- 侧边栏用户面板（可选） -->
+            <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                <div class="info">
+                    <a class="d-block text-centerx" th:text="'欢迎使用,'+ ${session.emp_user.getF_name()}"></a>
+                </div>
+            </div>
+
+            <!-- 侧边栏菜单 -->
+            <div th:include="~{emppublic::nb(activeUri='allInform')}"></div>
+            <!-- /.sidebar-menu -->
+        </div>
+        <!-- /.sidebar -->
+    </aside>
+
+    <!-- Content Wrapper. 包含页面内容 -->
+    <div class="content-wrapper">
+        <div class="content">
+            <div class="card-info">
+                <div class="card-header">
+                    <h3 class="card-title">发布通知</h3>
+                </div>
+                <!-- /.card-header -->
+                <!-- form start -->
+                <form action="/inform/write.do">
+                    <div class="card-body">
+                        <div class="text-center" style="color: #ff0931" th:text="${#httpServletRequest.getAttribute('flag')}"></div>
+                        <div class="form-group">
+                            <label for="name">通知标题</label>
+                            <input type="text" class="form-control" id="name" name="title" style="width: 600px" placeholder="输入通知标题" required="required">
+                        </div>
+                        <div class="form-group"  >
+                            <div id="div1">
+                            </div>
+                            <textarea id="text1" style="display: none;" name="context" required="required"></textarea>
+                        </div>
+
+                    </div>
+                    <!-- /.card-body -->
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-primary toastsDefaultAutohide">发布</button>
+                        <a  href="/inform/empToAll" class="btn btn-secondary toastsDefaultAutohide">返回</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+
+    <!-- Control Sidebar -->
+
+    <!-- /.control-sidebar -->
+
+    <!-- Main Footer -->
+    <footer class="main-footer">
+        <!-- To the right -->
+        <div class="float-right d-none d-sm-inline">
+            17软件工程6班欧凯曈
+        </div>
+        <!-- Default to the left -->
+        <strong>Copyright &copy; 2020-2021 <a href="https://adminlte.io">欧凯曈</a>.</strong> 保留所有权利。
+    </footer>
+</div>
+<!-- ./wrapper -->
+<!-- 引入 wangEditor.min.js -->
+<script type="text/javascript">
+    const E = window.wangEditor
+    const editor = new E('#div1')
+    const $text1 = $('#text1')
+    editor.config.excludeMenus = [
+        'code',
+        'image',
+        'video',
+        'quote',
+        'todo',
+        'foreColor',
+        'backColor',
+        'link',
+    ]
+    editor.config.onchange = function (html) {
+        // 第二步，监控变化，同步更新到 textarea
+        $text1.val(html)
+    }
+    editor.create()
+
+    // 第一步，初始化 textarea 的值
+    $text1.val(editor.txt.html())
+</script>
+<!-- jQuery -->
+<script src="/plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- AdminLTE App -->
+<script src="/dist/js/adminlte.min.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>物业管理系统</title>
+  <!-- 告诉浏览器屏幕自适应 -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="/plugins/fontawesome-free/css/all.min.css">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="https://cdn.bootcss.com/ionicons/2.0.1/css/ionicons.min.css">
+  <!-- icheck bootstrap -->
+  <link rel="stylesheet" href="/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+  <!-- 主题样式 -->
+  <link rel="stylesheet" href="/dist/css/adminlte.min.css">
+  <!-- 离线 Google 字体: Source Sans Pro -->
+  <link href="/static/dist/css/google.css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+  <!--阿里巴巴图标库-->
+  <link href="//at.alicdn.com/t/font_2488332_j81weciq6e.css" rel="stylesheet">
+</head>
+<body class="hold-transition login-page">
+<div class="login-box">
+  <div class="login-logo">
+    <a href="/userlogin/toLogin"><b>业主物业系统</b></a>
+  </div>
+  <!-- /.login-logo -->
+  <div class="card">
+    <div class="card-body login-card-body">
+      <p class="login-box-msg">帐户注册</p>
+      <div class="text-center" style="color: #ff0931" th:text="${flag}"></div>
+      <form action="/user/reg.do" method="post">
+        <label>帐号</label>
+        <div class="input-group mb-3">
+          <input type="text" class="form-control" name="username" placeholder="帐号"  required="required" onKeyUp="value=value.replace(/[\W]/g,'')" maxlength="20" minlength="6">
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="iconfont icon-icon-test"></span>
+            </div>
+          </div>
+        </div>
+        <label>密码（6-13位数字、字母或数字与字母组合）</label>
+        <div class="input-group mb-3">
+          <input  type="password" class="form-control" name="password" placeholder="密码" maxlength="13" minlength="6" onKeyUp="value=value.replace(/[\W]/g,'')"  required="required">
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="iconfont icon-suo"></span>
+            </div>
+          </div>
+        </div>
+        <label>姓名</label>
+        <div class="input-group mb-3">
+          <input type="text" class="form-control" name="name" placeholder="姓名"  required="required">
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="iconfont icon-xingming"></span>
+            </div>
+          </div>
+        </div>
+        <label>联系电话</label>
+        <div class="input-group mb-3">
+          <input type="tel" class="form-control" name="phone" placeholder="联系电话" oninput = "value=value.replace(/[^\d]/g,'')"  pattern=".{11,11}" required="required" maxlength="11">
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="iconfont icon-dianhua"></span>
+            </div>
+          </div>
+        </div>
+        <label>身份证号码</label>
+        <div class="input-group mb-3">
+          <input type="text" class="form-control" name="uid" placeholder="身份证号码"  required="required" maxlength="18" minlength="18" onKeyUp="value=value.replace(/[\W]/g,'')">
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="iconfont icon-credentials_icon"></span>
+            </div>
+          </div>
+        </div>
+        <label>性别</label>
+        <div class="form-group">
+          <div class="form-check">
+          <input type="radio" class="form-check-input" name="gender" value=1  required="required"> 男
+          </div>
+          <div class="form-check">
+            <input type="radio" class="form-check-input" name="gender" value=0  required="required"> 女
+          </div>
+        </div>
+        <div class="form-group" th:if="${not #lists.isEmpty(session.one)}">
+        <label>一号地址栏</label>
+        <div class="input-group mb-3">
+          <select class="form-control" name="addOne"  required="required">
+            <option value="">请选择</option>
+            <option th:each="o:${session.one}" th:value="${o.getH_id()}" th:text="${o.getName()}"></option>
+          </select>
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="iconfont icon-dizhi"></span>
+            </div>
+          </div>
+        </div>
+        </div>
+        <div class="form-group" th:if="${not #lists.isEmpty(session.two)}">
+        <label>二号地址栏</label>
+        <div class="input-group mb-3">
+          <select class="form-control select2 select2-hidden-accessible" name="addTwo"  required="required">
+            <option value="">请选择</option>
+            <option th:each="t:${session.two}" th:value="${t.getH_id()}" th:text="${t.getName()}"></option>
+          </select>
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="iconfont icon-dizhi"></span>
+            </div>
+          </div>
+        </div>
+        </div>
+        <div class="form-group" th:if="${not #lists.isEmpty(session.three)}">
+        <label>三号地址栏</label>
+        <div class="input-group mb-3">
+          <select class="form-control select2 select2-hidden-accessible" name="addThree"  required="required">
+            <option value="">请选择</option>
+            <option th:each="h:${session.three}" th:value="${h.getH_id()}" th:text="${h.getName()}"></option>
+          </select>
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="iconfont icon-dizhi"></span>
+            </div>
+          </div>
+        </div>
+        </div>
+        <div class="form-group" th:if="${not #lists.isEmpty(session.four)}">
+        <label>四号地址栏</label>
+        <div class="input-group mb-3">
+          <select class="form-control select2 select2-hidden-accessible" name="addFour"  required="required">
+            <option value="">请选择</option>
+            <option th:each="f:${session.four}" th:value="${f.getH_id()}" th:text="${f.getName()}"></option>
+          </select>
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="iconfont icon-dizhi"></span>
+            </div>
+          </div>
+        </div>
+        </div>
+        <div class="row">
+          <!-- /.col -->
+          <div class="col-md-12">
+            <button type="submit" class="btn  btn-block bg-success color-palette">注册</button>
+          </div>
+          <!-- /.col -->
+        </div>
+      </form>
+
+      <div class="social-auth-links text-center mb-3">
+        <p>- 或 -</p>
+        <a href="/userlogin/toLogin" class="btn btn-block btn-primary">
+           返回登录页面
+        </a>
+      </div>
+      <!-- /.social-auth-links -->
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-6 text-left">
+            <a href="/user/toForgot">忘记密码</a>
+          </div>
+          <div class="col-md-6 text-right">
+            <a href="/user/toCheck">审核查询</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <!-- /.login-card-body -->
+  </div>
+</div>
+<!-- /.login-box -->
+
+<!-- jQuery -->
+<script src="/plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- AdminLTE App -->
+<script src="/dist/js/adminlte.min.js"></script>
+
+</body>
+</html>

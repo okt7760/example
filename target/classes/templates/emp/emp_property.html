@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <title>主页</title>
+
+    <!-- Font Awesome 图标 -->
+    <link rel="stylesheet" href="/plugins/fontawesome-free/css/all.min.css">
+    <!-- 主题样式 -->
+    <link rel="stylesheet" href="/dist/css/adminlte.min.css">
+    <!-- 离线 Google 字体: Source Sans Pro -->
+    <link href="/dist/css/google.css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="//at.alicdn.com/t/font_2429669_190zxvhlk87.css">
+
+
+</head>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+
+    <!-- 导航栏 -->
+    <div th:include="~{emppublic::tb}"></div>
+    <!-- /.navbar -->
+
+    <!-- 主侧边栏容器 -->
+    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+        <!-- 品牌 Logo -->
+        <a href="index3.html" class="brand-link">
+           <!-- <img src="/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
+                 style="opacity: .8">-->
+            <span class="brand-text font-weight-light text-center">物业管理系统</span>
+        </a>
+
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <!-- 侧边栏用户面板（可选） -->
+            <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                <div class="info">
+                    <a class="d-block text-centerx" th:text="'欢迎使用,'+ ${session.emp_user.getF_name()}"></a>
+                </div>
+            </div>
+
+            <!-- 侧边栏菜单 -->
+            <div th:include="~{emppublic::nb(activeUri='searchProperty')}"></div>
+            <!-- /.sidebar-menu -->
+        </div>
+        <!-- /.sidebar -->
+    </aside>
+
+    <!-- Content Wrapper. 包含页面内容 -->
+    <div class="content-wrapper">
+        <!-- 主体内容 -->
+        <div class="content">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">生活费用查询</h3>
+
+                            <div class="card-tools">
+                                <form action="/cost/pFindById.do"  class="input-group input-group-sm" style="width: 450px;">
+                                    <select class="form-control float-right" name="one" th:if="${not #lists.isEmpty(session.one)}">
+                                        <option value="">请选择</option>
+                                        <option th:each="f:${session.one}" th:value="${f.getH_id()}" th:text="${f.getName()}"></option>
+                                    </select>
+                                    <select class="form-control float-right" name="two" th:if="${not #lists.isEmpty(session.two)}">
+                                        <option value="">请选择</option>
+                                        <option th:each="f:${session.two}" th:value="${f.getH_id()}" th:text="${f.getName()}"></option>
+                                    </select>
+                                    <select class="form-control float-right" name="three" th:if="${not #lists.isEmpty(session.three)}">
+                                        <option value="">请选择</option>
+                                        <option th:each="f:${session.three}" th:value="${f.getH_id()}" th:text="${f.getName()}"></option>
+                                    </select>
+                                    <select class="form-control float-right" name="four" th:if="${not #lists.isEmpty(session.four)}">
+                                        <option value="">请选择</option>
+                                        <option th:each="f:${session.four}" th:value="${f.getH_id()}" th:text="${f.getName()}"></option>
+                                    </select>
+                                    <div class="input-group-append">
+                                        <button type="submit" class="btn btn-sm btn-default">搜索</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body table-responsive p-0">
+                            <table class="table table-hover text-nowrap">
+                                <thead>
+                                <tr>
+                                    <th>账单编号</th>
+                                    <th>时间</th>
+                                    <th>住址</th>
+                                    <th>月保费用</th>
+                                    <th>缴费状态</th>
+                                    <th>操作</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="l : ${list}">
+                                    <td th:text="${l.getProp_id()}"></td>
+                                    <td th:text="${l.getProp_date_str()}"></td>
+                                    <td th:text="${l.getH_name()}"></td>
+                                    <td th:text="${l.getProp_fee()}"></td>
+                                    <td th:text="${l.getProp_status() == 0 ? '未缴费' : '缴费'}"></td>
+                                    <td>
+                                        <a class="btn btn btn-sm btn-success" th:href="'/cost/updateProp.do?id='+${l.getProp_id()}+'&hid='+${l.getH_id()}+'&mode=1'">已缴款</a>
+                                        <a class="btn btn btn-sm btn-warning" th:href="'/cost/updateProp.do?id='+${l.getProp_id()}+'&hid='+${l.getH_id()}+'&mode=0'">未缴款</a>
+                                        <a class="btn btn btn-sm btn-danger" th:href="'/cost/delProp.do?id='+${l.getProp_id()}+'&hid='+${l.getH_id()}">删除</a>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+                </div>
+            </div>
+        </div>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+
+    <!-- Control Sidebar -->
+
+    <!-- /.control-sidebar -->
+
+    <!-- Main Footer -->
+    <footer class="main-footer">
+        <!-- To the right -->
+        <div class="float-right d-none d-sm-inline">
+            17软件工程6班欧凯曈
+        </div>
+        <!-- Default to the left -->
+        <strong>Copyright &copy; 2020-2021 <a href="https://adminlte.io">欧凯曈</a>.</strong> 保留所有权利。
+    </footer>
+</div>
+<!-- ./wrapper -->
+
+<!-- 载入脚本 -->
+
+<!-- jQuery -->
+<script src="/plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- AdminLTE App -->
+<script src="/dist/js/adminlte.min.js"></script>
+</body>
+</html>

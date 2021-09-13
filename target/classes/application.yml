@@ -1,0 +1,12 @@
+server:
+  port: 8080
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/graduation?serverTimezone=Asia/Shanghai
+    username: root
+    password: 19970930
+  thymeleaf:
+    cache: false
+  jackson:
+    time-zone: GMT+8

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title></title>
+</head>
+<body>
+<!--左侧导航栏公共模块-->
+<span th:fragment="nb" id="navbar">
+       <nav class="mt-2">
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                <!-- 使用 .nav-icon 类添加图标，
+                     或使用 font-awesome 或其他任何图标字体库 -->
+                <li class="nav-item">
+                    <a href="/userManage/toAllEmp" th:class="${activeUri=='emp'?'nav-link active':'nav-link'}">
+                        <i class="iconfont icon-yuangong"></i>
+                        <p>
+                            员工管理
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item has-treeview">
+                    <a href="/park/adminToPark" th:class="${activeUri=='park'?'nav-link active':'nav-link'}">
+                        <i class="iconfont icon-car"></i>
+                        <p>
+                            停车场管理
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item has-treeview">
+                    <a href="/cost/adminToFeeManagement" th:class="${activeUri=='fee'?'nav-link active':'nav-link'}">
+                        <i class="iconfont icon-jiaofeiguanli"></i>
+                        <p>
+                            费用管理
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item has-treeview">
+                    <a href="/inform/adminToInform" th:class="${activeUri=='inform'?'nav-link active':'nav-link'}">
+                        <i class="iconfont icon-tongzhi"></i>
+                        <p>
+                            通知管理
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item has-treeview">
+                    <a href="#" class="nav-link">
+                        <i class="iconfont icon-ziyuan"></i>
+                        <p>
+                            楼盘管理
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="/address/toAddressFirst" th:class="${activeUri=='one'?'nav-link active':'nav-link'}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>一级地址管理</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/address/toAddressSecond" th:class="${activeUri=='two'?'nav-link active':'nav-link'}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>二级地址管理</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/address/toAddressThird" th:class="${activeUri=='three'?'nav-link active':'nav-link'}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>三级地址管理</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/address/toAddressFourth" th:class="${activeUri=='four'?'nav-link active':'nav-link'}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>四级地址管理</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+            </ul>
+        </nav>
+    </span>
+
+<!--顶部导航栏公共模块-->
+<span th:fragment="tb" id="topbar">
+<nav class="main-header navbar navbar-expand navbar-white navbar-light">
+        <!-- 左侧导航栏链接 -->
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+            </li>
+            <li class="nav-item d-none d-sm-inline-block">
+                <a href="/emplogin/adminMain" class="nav-link">主页</a>
+            </li>
+            <li class="nav-item d-none d-sm-inline-block">
+                <a href="/user/toAdminDetail" class="nav-link">个人信息</a>
+            </li>
+        </ul>
+
+    <!-- 右侧导航栏链接 -->
+        <ul class="navbar-nav ml-auto">
+            <a href="/emplogin/logout.do" class="btn btn-block btn-secondary">注销登录</a>
+        </ul>
+    </nav>
+    </span>
+</body>
+
+</html>

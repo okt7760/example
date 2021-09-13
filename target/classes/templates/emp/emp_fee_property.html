@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <title>主页</title>
+
+    <!-- Font Awesome 图标 -->
+    <link rel="stylesheet" href="/plugins/fontawesome-free/css/all.min.css">
+    <!-- 主题样式 -->
+    <link rel="stylesheet" href="/dist/css/adminlte.min.css">
+    <!-- 离线 Google 字体: Source Sans Pro -->
+    <link href="/dist/css/google.css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="//at.alicdn.com/t/font_2429669_190zxvhlk87.css">
+
+
+</head>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+
+    <!-- 导航栏 -->
+    <div th:include="~{emppublic::tb}"></div>
+    <!-- /.navbar -->
+
+    <!-- 主侧边栏容器 -->
+    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+        <!-- 品牌 Logo -->
+        <a href="index3.html" class="brand-link">
+            <!-- <img src="/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
+                  style="opacity: .8">-->
+            <span class="brand-text font-weight-light text-center">物业管理系统</span>
+        </a>
+
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <!-- 侧边栏用户面板（可选） -->
+            <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                <div class="info">
+                    <a class="d-block text-centerx" th:text="'欢迎使用,'+ ${session.emp_user.getF_name()}"></a>
+                </div>
+            </div>
+
+            <!-- 侧边栏菜单 -->
+            <div th:include="~{emppublic::nb(activeUri='addProperty')}"></div>
+            <!-- /.sidebar-menu -->
+        </div>
+        <!-- /.sidebar -->
+    </aside>
+
+    <!-- Content Wrapper. 包含页面内容 -->
+    <div class="content-wrapper">
+        <div class="content">
+            <div class="card-info">
+                <div class="card-header">
+                    <h3 class="card-title">费用管理</h3>
+                    <div class="text-center">
+                        <strong style="color: #ff0931" th:text="${#httpServletRequest.getAttribute('flag')}"></strong>
+                    </div>
+                    </div>
+                <!-- /.card-header -->
+                <!-- form start -->
+
+                <form action="/cost/empSetPropertyFee.do">
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label>时间</label>
+                            <input type="date" name="date" class="form-control" style="width:300px;" required="required">
+                        </div>
+                        <div class="form-group" th:if="${not #lists.isEmpty(session.one)}">
+                            <label>一级地址</label>
+                            <select class="form-control" name="one" style="width:600px;" required="required" >
+                                <option value="">请选择</option>
+                                <option th:each="f:${session.one}" th:value="${f.getH_id()}"
+                                        th:text="${f.getName()}"></option>
+                            </select>
+                        </div>
+                        <div class="form-group" th:if="${not #lists.isEmpty(session.two)}">
+                            <label>二级地址</label>
+                            <select class="form-control" name="two" style="width:600px;" required="required" >
+                                <option value="">请选择</option>
+                                <option th:each="f:${session.two}" th:value="${f.getH_id()}"
+                                        th:text="${f.getName()}"></option>
+                            </select>
+                        </div>
+                        <div class="form-group" th:if="${not #lists.isEmpty(session.three)}">
+                            <label>三级地址</label>
+                            <select class="form-control" name="three" style="width:600px;" required="required" >
+                                <option value="">请选择</option>
+                                <option th:each="f:${session.three}" th:value="${f.getH_id()}"
+                                        th:text="${f.getName()}"></option>
+                            </select>
+                        </div>
+                        <div class="form-group" th:if="${not #lists.isEmpty(session.four)}">
+                            <label>四级地址</label>
+                            <select class="form-control" name="four" style="width:600px;" required="required" >
+                                <option value="">请选择</option>
+                                <option th:each="f:${session.four}" th:value="${f.getH_id()}"
+                                        th:text="${f.getName()}"></option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>物业费/平方米</label>
+                            <input type="text" class="form-control" id="prop_input" placeholder="输入房屋面积"
+                                   style="width:600px;" required="required">
+                            费用:<span id="prop-total"></span>
+                            <input type="hidden" name="propfee" id="prop_output">
+                        </div>
+                    </div>
+                    <!-- /.card-body -->
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-primary toastsDefaultAutohide">添加</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+
+    <!-- Control Sidebar -->
+
+    <!-- /.control-sidebar -->
+
+    <!-- Main Footer -->
+    <footer class="main-footer">
+        <!-- To the right -->
+        <div class="float-right d-none d-sm-inline">
+            17软件工程6班欧凯曈
+        </div>
+        <!-- Default to the left -->
+        <strong>Copyright &copy; 2020-2021 <a href="https://adminlte.io">欧凯曈</a>.</strong> 保留所有权利。
+    </footer>
+</div>
+<!-- ./wrapper -->
+
+<!-- 载入脚本 -->
+
+<!-- jQuery -->
+<script src="/plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- AdminLTE App -->
+<script src="/dist/js/adminlte.min.js"></script>
+<script type="text/javascript">
+    let prop_input = document.getElementById("prop_input")  // 获取房屋面积标签
+    let prop_total = document.getElementById("prop-total")  // 获取显示物业费标签
+    let prop_output = document.getElementById("prop_output")  // 获取储存物业费标签
+
+    prop_total.innerText = 0
+
+    prop_input.oninput= function () {  // 物业费输入触发事件
+        let total= prop_input.value*[[${session.prop.getOne()}]]
+        prop_output.value=total
+        prop_total.innerText=total
+    }
+</script>
+</body>
+</html>
